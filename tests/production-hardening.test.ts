@@ -317,7 +317,7 @@ describe('authenticated production vertical slice', () => {
     expect(productionPage).toContain('Authenticated production data');
     expect(productionPage).toContain(GENESIS);
     expect(productionPage).toContain('--mc-accent: #c9f36b');
-    expect(productionPage).toContain('<span>R8</span>');
+    expect(productionPage).toContain('<span>M</span>');
     expect(productionPage).not.toContain('#7c6cff');
     expect(productionPage).toContain('data-machine-open');
     expect(productionPage).toContain('id="mc-machine-dialog"');

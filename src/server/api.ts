@@ -188,7 +188,7 @@ export const handleHealth: ApiHandler = (_params, config) => ({
   status: 200,
   payload: {
     ok: true,
-    name: '@machinefi/runtime',
+    name: 'Machina',
     version: RUNTIME_VERSION,
     mode: config.allowLive ? 'fixture + live-read' : 'fixture-only',
     liveReadEnabled: config.allowLive,

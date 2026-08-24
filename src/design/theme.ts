@@ -1,5 +1,5 @@
 /**
- * Runtime 8 shared visual language.
+ * Machina shared visual language.
  *
  * Public pages consume the semantic CSS variables directly. Machine Console
  * maps its existing `--mc-*` API to these values so its component structure

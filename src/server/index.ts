@@ -124,7 +124,7 @@ async function route(req: IncomingMessage, res: ServerResponse, config: ServerCo
 
   if ((config.dataMode ?? 'fixture') === 'production' && path === '/api' && isRead) {
     sendJson(res, 200, {
-      service: '@machinefi/runtime production application',
+      service: 'Machina production application',
       authentication: 'Solana wallet message challenge + HttpOnly session + CSRF',
       endpoints: {
         'POST /api/auth/challenge': 'issue a single-use domain-bound wallet challenge',
@@ -174,7 +174,7 @@ async function route(req: IncomingMessage, res: ServerResponse, config: ServerCo
     if (path === '/api/health' && isRead) {
       sendJson(res, 200, {
         ok: true,
-        name: '@machinefi/runtime',
+        name: 'Machina',
         version: RUNTIME_VERSION,
         mode: 'production',
         authenticatedApplication: true,
@@ -319,7 +319,7 @@ if (isMainModule()) {
   const port = typeof address === 'object' && address !== null ? address.port : config.port;
   const displayHost = isLoopbackHost(config.host) ? 'localhost' : config.host;
 
-  console.log(`MachineFi Runtime v${RUNTIME_VERSION} listening on http://${displayHost}:${port}`);
+  console.log(`Machina v${RUNTIME_VERSION} listening on http://${displayHost}:${port}`);
   console.log(`  website   http://${displayHost}:${port}/`);
   console.log(`  console   http://${displayHost}:${port}/console`);
   console.log(`  routes    http://${displayHost}:${port}/api`);

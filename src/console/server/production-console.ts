@@ -810,7 +810,7 @@ const layout = (active: string, wallet: string, cluster: string, body: string): 
 <div class="mc-shell mc-shell--production">
   <div class="mc-shell__brand">
     <a class="mc-brand" href="/console/overview" aria-label="Machine Console overview">
-      <span class="mc-brand__mark" aria-hidden="true"><span>R8</span></span>
+      <span class="mc-brand__mark" aria-hidden="true"><span>M</span></span>
       <span class="mc-brand__meta"><span class="mc-brand__name">Machine Console</span><span class="mc-brand__sub">Runtime control plane</span></span>
     </a>
   </div>
@@ -828,7 +828,7 @@ const layout = (active: string, wallet: string, cluster: string, body: string): 
       <nav class="mc-nav">${navItems.map(([id, label]) => `<a class="mc-nav__link" href="/console/${id}"${active === id ? ' aria-current="page"' : ''}>${navIcon(id)}<span class="mc-nav__text">${label}</span></a>`).join('')}</nav>
       <div class="mc-sidebar__footer">
         <div class="mc-sidebar-status"><span class="mc-sidebar-status__dot"></span><span><strong>Systems operational</strong><small>RPC identity verified</small></span></div>
-        <span class="mc-sidebar-version">MachineFi Runtime</span>
+        <span class="mc-sidebar-version">Machina</span>
       </div>
     </aside>
   </div>
@@ -1051,7 +1051,7 @@ export async function renderProductionConsoleDocument(input: {
     if (!(error instanceof HttpError) || error.status !== 401) throw error;
     const login = `<main id="mc-main" class="mc-auth-page">
       <section class="mc-auth-showcase" aria-label="Machine Console introduction">
-        <a class="mc-brand mc-auth-brand" href="/console/overview"><span class="mc-brand__mark" aria-hidden="true"><span>R8</span></span><span class="mc-brand__meta"><span class="mc-brand__name">Machine Console</span><span class="mc-brand__sub">Production control plane</span></span></a>
+        <a class="mc-brand mc-auth-brand" href="/console/overview"><span class="mc-brand__mark" aria-hidden="true"><span>M</span></span><span class="mc-brand__meta"><span class="mc-brand__name">Machine Console</span><span class="mc-brand__sub">Production control plane</span></span></a>
         <div class="mc-auth-showcase__copy"><p class="mc-kicker">Secure machine infrastructure</p><h1>Operate physical networks with verifiable ownership.</h1><p>Monitor machines, coordinate resources, and settle work through one ownership-scoped control plane.</p></div>
         <div class="mc-auth-proof-grid"><div><span class="mc-auth-proof__icon">01</span><strong>Wallet-owned</strong><small>Every operation is authorized server-side.</small></div><div><span class="mc-auth-proof__icon">02</span><strong>${esc(input.config.solanaCluster ?? 'Custom network')} verified</strong><small>RPC identity is checked before startup.</small></div><div><span class="mc-auth-proof__icon">03</span><strong>Non-custodial</strong><small>Your private keys never leave your wallet.</small></div></div>
       </section>
@@ -1642,5 +1642,5 @@ body { letter-spacing: -0.005em; }
 `;
 
 function document(title: string, nonce: string, body: string, version: string): string {
-  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="dark"><title>${esc(title)} · Machine Console</title><style nonce="${nonce}">${stylesheet()}\n${productionStyles()}</style></head><body><a href="#mc-main" class="mc-sr">Skip to content</a>${body}<footer class="mc-sr">Runtime ${esc(version)}</footer><script nonce="${nonce}">${productionClientScript()}</script></body></html>`;
+  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="dark"><title>${esc(title)} · Machina Console</title><style nonce="${nonce}">${stylesheet()}\n${productionStyles()}</style></head><body><a href="#mc-main" class="mc-sr">Skip to content</a>${body}<footer class="mc-sr">Machina ${esc(version)}</footer><script nonce="${nonce}">${productionClientScript()}</script></body></html>`;
 }

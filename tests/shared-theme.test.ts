@@ -5,7 +5,7 @@ import { renderConsoleDocument } from '../src/console/server/handler.js';
 import { sharedTheme, sharedThemeCssVars } from '../src/design/theme.js';
 import { renderPublicSiteHtml } from '../src/server/public-site.js';
 
-describe('shared Runtime 8 design language', () => {
+describe('shared Machina design language', () => {
   it('maps the Console token API to the shared semantic source', () => {
     expect(color.ground).toBe(sharedTheme.color.background);
     expect(color.surface).toBe(sharedTheme.color.surface);
@@ -23,7 +23,7 @@ describe('shared Runtime 8 design language', () => {
     expect(css).not.toContain('#c78a2a');
   });
 
-  it('emits the same semantic variables and R8 identity in both renderers', () => {
+  it('emits the same semantic variables and Machina identity in both renderers', () => {
     const publicHtml = renderPublicSiteHtml('nonce', { version: '0.9.4', showRuntimeInspector: false });
     const consoleHtml = renderConsoleDocument({
       pathname: '/console',
@@ -35,8 +35,8 @@ describe('shared Runtime 8 design language', () => {
 
     expect(sharedThemeCssVars()).toContain(`--background: ${sharedTheme.color.background}`);
     expect(publicHtml).toContain(`--accent: ${sharedTheme.color.accent}`);
-    expect(publicHtml).toContain('class="brand-mark">R8</span>');
-    expect(consoleHtml).toContain('<span aria-hidden="true">R8</span>');
+    expect(publicHtml).toContain('class="brand-mark">M</span>');
+    expect(consoleHtml).toContain('<span aria-hidden="true">M</span>');
     expect(consoleHtml).toContain(`--mc-accent: ${sharedTheme.color.accent}`);
   });
 });

@@ -22,7 +22,7 @@ const listen = async (): Promise<string> => {
 };
 
 describe('public website separation', () => {
-  it('renders every requested public section with original Runtime 8 branding', () => {
+  it('renders every requested public section with Machina branding', () => {
     const html = renderPublicSiteHtml('nonce', { version: '0.9.4', showRuntimeInspector: true });
 
     for (const section of [
@@ -37,10 +37,11 @@ describe('public website separation', () => {
       'id="developers"',
     ]) expect(html).toContain(section);
 
-    expect(html).toContain('Runtime 8');
+    expect(html).toContain('Machina');
+    expect(html).not.toContain('Runtime 8');
     expect(html).toContain('href="/console"');
     expect(html).toContain('Launch Machine Console');
-    expect(html).toContain('https://github.com/Machine-Fi/runtime-8');
+    expect(html).toContain('https://github.com/machina3001/MachinaSol');
     expect(html).toContain('/developers/runtime-inspector');
     expect(html).toContain('class="mobile-menu"');
     expect(html).toContain('aria-label="Open navigation"');

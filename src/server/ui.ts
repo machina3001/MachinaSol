@@ -713,7 +713,7 @@ export function renderIndexHtml(nonce: string, options: UiOptions): string {
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="dark">
-<title>MachineFi Runtime · Machine Console</title>
+<title>Machina · Machine Console</title>
 <style nonce="${safeNonce}">${STYLE}</style>
 </head>
 <body>
@@ -724,7 +724,7 @@ export function renderIndexHtml(nonce: string, options: UiOptions): string {
       <div class="brand">
         <span class="brand-mark">${BRAND_MARK}</span>
         <span class="brand-lockup">
-          <span class="brand-name">MachineFi</span>
+          <span class="brand-name">Machina</span>
           <span class="brand-sub">runtime console</span>
         </span>
       </div>
@@ -983,7 +983,7 @@ export function renderIndexHtml(nonce: string, options: UiOptions): string {
 
 <footer>
   <div class="page footer-inner">
-    <span class="label-caps">MachineFi Runtime · v${version} · local</span>
+    <span class="label-caps">Machina · v${version} · local</span>
     <p class="footer-note">
       Loopback-bound development console with no authentication layer. Fixture mode is the default and
       performs no network I/O. Do not expose this server beyond your machine.

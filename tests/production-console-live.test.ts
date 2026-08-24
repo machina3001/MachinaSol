@@ -143,7 +143,7 @@ describe('production Console client hooks', () => {
     let reloads = 0;
     const walletAddress = '11111111111111111111111111111111';
     const challengeId = 'challenge-id';
-    const challengeMessage = 'MachineFi Console authentication\n\nSign this message to authenticate.';
+    const challengeMessage = 'Machina Console authentication\n\nSign this message to authenticate.';
     const csrfToken = 'csrf-token';
     const fakeFetch = async (path: string, init: Record<string, unknown>) => {
       requests.push({ path, init });

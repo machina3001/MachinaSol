@@ -12,7 +12,7 @@ const escapeHtml = (value: string): string => value
   .replaceAll('"', '&quot;')
   .replaceAll("'", '&#039;');
 
-const GITHUB_URL = 'https://github.com/Machine-Fi/runtime-8';
+const GITHUB_URL = 'https://github.com/machina3001/MachinaSol';
 const NPM_URL = 'https://www.npmjs.com/package/@machinefi/runtime';
 
 const STYLE = String.raw`
@@ -225,17 +225,17 @@ export function renderPublicSiteHtml(nonce: string, options: PublicSiteOptions):
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="dark">
-<meta name="description" content="Runtime 8 is application infrastructure for wallet-owned machines, resource coordination, telemetry, settlement, and verifiable receipts.">
-<title>Runtime 8 · Infrastructure for the Machine Economy</title>
+<meta name="description" content="Machina is application infrastructure for wallet-owned machines, resource coordination, telemetry, settlement, and verifiable receipts.">
+<title>Machina · Infrastructure for the Machine Economy</title>
 <style nonce="${safeNonce}">${STYLE}</style>
 </head>
 <body>
 <div class="site-shell">
   <nav class="public-nav" aria-label="Public website">
     <div class="container nav-inner">
-      <a class="brand" href="#home" aria-label="Runtime 8 home">
-        <span class="brand-mark">R8</span>
-        <span class="brand-copy"><span class="brand-name">Runtime 8</span><span class="brand-sub">Machine infrastructure</span></span>
+      <a class="brand" href="#home" aria-label="Machina home">
+        <span class="brand-mark">M</span>
+        <span class="brand-copy"><span class="brand-name">Machina</span><span class="brand-sub">Machine infrastructure</span></span>
       </a>
       <div class="nav-links">
         <a href="#home">Home</a><a href="#runtime">Runtime</a><a href="#resources">Resources</a><a href="#use-cases">Use Cases</a><a href="#developers">Developers</a>
@@ -255,7 +255,7 @@ export function renderPublicSiteHtml(nonce: string, options: PublicSiteOptions):
     <section class="hero" id="home">
       <div class="container hero-grid">
         <div>
-          <div class="hero-label"><span></span> Runtime 8 · Application layer for autonomous machines</div>
+          <div class="hero-label"><span></span> Machina · Application layer for autonomous machines</div>
           <h1>Infrastructure for the <em>machine economy.</em></h1>
           <p class="hero-copy">A production application layer where robots, drones, sensors, and edge hardware can establish identity, coordinate work, request resources, settle value, and leave verifiable records.</p>
           <div class="hero-actions">
@@ -306,9 +306,9 @@ export function renderPublicSiteHtml(nonce: string, options: PublicSiteOptions):
         </div>
         <div>
           <div class="console-frame" aria-label="Illustrative Machine Console preview">
-            <div class="console-top"><div class="console-dots"><i></i><i></i><i></i></div><span>Runtime 8 / Console preview</span><span>v${version}</span></div>
+            <div class="console-top"><div class="console-dots"><i></i><i></i><i></i></div><span>Machina / Console preview</span><span>v${version}</span></div>
             <div class="console-ui">
-              <aside class="console-side"><div class="mini-brand">R8</div><div class="mini-nav"><span class="active">Overview</span><span>Machines</span><span>Resources</span><span>Jobs</span><span>Telemetry</span><span>Settlements</span></div></aside>
+              <aside class="console-side"><div class="mini-brand">M</div><div class="mini-nav"><span class="active">Overview</span><span>Machines</span><span>Resources</span><span>Jobs</span><span>Telemetry</span><span>Settlements</span></div></aside>
               <div class="console-main">
                 <div class="console-title"><div><small>Operator workspace</small><h3>Network overview</h3></div><span class="live-pill">● CONNECTED</span></div>
                 <div class="console-metrics"><div class="metric"><small>Machines</small><strong>OWNER SCOPE</strong><em>Identity verified</em></div><div class="metric"><small>Telemetry</small><strong>EVENT FLOW</strong><em>Freshness derived</em></div><div class="metric"><small>Settlement</small><strong>USER SIGNED</strong><em>Confirmation tracked</em></div></div>
@@ -339,7 +339,7 @@ export function renderPublicSiteHtml(nonce: string, options: PublicSiteOptions):
     <section class="section" id="stack">
       <span class="section-index">04 / STACK</span>
       <div class="container">
-        <div class="section-heading"><p class="eyebrow">Runtime stack</p><h2>Eight application modules. One operating layer.</h2><p>Runtime 8 combines public runtime interfaces with production application services for authentication, persistence, marketplace coordination, and live operations.</p></div>
+        <div class="section-heading"><p class="eyebrow">Runtime stack</p><h2>Eight application modules. One operating layer.</h2><p>Machina combines public runtime interfaces with production application services for authentication, persistence, marketplace coordination, and live operations.</p></div>
         <div class="stack-grid">
           <article class="stack-card"><span class="stack-no">01</span><div><h3>Machine identity</h3><p>Wallet-owned machine records, roles, capabilities, and revocable machine credentials.</p></div><span class="stack-state">Application</span></article>
           <article class="stack-card"><span class="stack-no">02</span><div><h3>Runtime sessions</h3><p>Durable machine session records mapped to the runtime-8 session model.</p></div><span class="stack-state">Runtime</span></article>
@@ -403,11 +403,11 @@ export function renderPublicSiteHtml(nonce: string, options: PublicSiteOptions):
   </main>
 
   <footer class="footer"><div class="container"><div class="footer-grid">
-    <div class="footer-lead"><a class="brand" href="#home"><span class="brand-mark">R8</span><span class="brand-copy"><span class="brand-name">Runtime 8</span><span class="brand-sub">Machine infrastructure</span></span></a><p>Application infrastructure for owner-controlled machines, resource exchange, live operations, and verifiable economic records.</p></div>
+    <div class="footer-lead"><a class="brand" href="#home"><span class="brand-mark">M</span><span class="brand-copy"><span class="brand-name">Machina</span><span class="brand-sub">Machine infrastructure</span></span></a><p>Application infrastructure for owner-controlled machines, resource exchange, live operations, and verifiable economic records.</p></div>
     <div class="footer-col"><h3>Platform</h3><a href="#runtime">Runtime</a><a href="#resources">Resources</a><a href="#console-preview">Machine Console</a><a href="#use-cases">Use Cases</a></div>
     <div class="footer-col"><h3>Developers</h3><a href="${GITHUB_URL}" target="_blank" rel="noreferrer">GitHub</a><a href="${NPM_URL}" target="_blank" rel="noreferrer">npm</a><a href="/api">API routes</a>${inspectorLink}</div>
     <div class="footer-col"><h3>Application</h3><a href="/console">Launch Console</a><a href="/console/machines">Machines</a><a href="/console/resources">Marketplace</a><a href="/console/telemetry">Telemetry</a></div>
-  </div><div class="footer-bottom"><span>© 2026 Runtime 8 · Open runtime interfaces, production application services</span><span>Production network identity is checked server-side</span></div></div></footer>
+  </div><div class="footer-bottom"><span>© 2026 Machina · Open runtime interfaces, production application services</span><span>Production network identity is checked server-side</span></div></div></footer>
 </div>
 </body>
 </html>`;

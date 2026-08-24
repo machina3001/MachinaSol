@@ -22,7 +22,7 @@ export interface BrandProps extends BaseProps {
   href?: string | undefined;
 }
 
-const DEFAULT_MARK: Html = html`<span aria-hidden="true">R8</span>`;
+const DEFAULT_MARK: Html = html`<span aria-hidden="true">M</span>`;
 
 export function Brand({ name, tagline, mark, href, ...base }: BrandProps): Html {
   const inner = html`

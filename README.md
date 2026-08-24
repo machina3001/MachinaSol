@@ -1,4 +1,4 @@
-# MachineFi Runtime
+# Machina
 
 [![CI](https://github.com/Machine-Fi/runtime/actions/workflows/ci.yml/badge.svg)](https://github.com/Machine-Fi/runtime/actions/workflows/ci.yml)
 [![npm](https://img.shields.io/npm/v/@machinefi/runtime.svg)](https://www.npmjs.com/package/@machinefi/runtime)
@@ -7,7 +7,7 @@
 ![Solana | Mainnet](https://img.shields.io/badge/Solana-Mainnet-6f42c1.svg)
 ![Deterministic fixtures](https://img.shields.io/badge/fixtures-deterministic%20runtime%20checks-orange.svg)
 
-MachineFi Runtime is the public TypeScript SDK and CLI for wallet-linked autonomous machines: robot arms, drones, sensors, rovers, warehouse bots, and DePIN/edge hardware. It gives developers inspectable building blocks for machine identity, capabilities, job lifecycle, telemetry snapshots, policy decisions, unsigned settlement intents, work proofs, and receipt verification.
+Machina is production application infrastructure for wallet-linked autonomous machines: robot arms, drones, sensors, rovers, warehouse bots, and DePIN/edge hardware. It uses the public `@machinefi/runtime` TypeScript SDK and CLI for inspectable machine identity, capabilities, job lifecycle, telemetry, policy, settlement-intent, proof, and receipt primitives.
 
 Solana is the only rail implemented in this checkout. It sits underneath the machine runtime as settlement, proof, and audit infrastructure. The broader MachineFi Robotics platform handles production orchestration, hardware integrations, private provider routing, treasury controls, and closed-core policy services outside this repository.
 

@@ -45,7 +45,7 @@ export interface WalletChallengeMessageInput {
 /** Human-readable, domain-bound message signed by the wallet. */
 export function walletChallengeMessage(input: WalletChallengeMessageInput): string {
   return [
-    'MachineFi Console authentication',
+    'Machina Console authentication',
     '',
     `Origin: ${input.audience}`,
     `Wallet: ${input.walletAddress}`,
