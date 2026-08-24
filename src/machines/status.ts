@@ -1,0 +1,4 @@
+export type MachineRuntimeStatus = 'idle' | 'assigned' | 'working' | 'completed' | 'faulted' | 'offline';
+const allowed: Record<MachineRuntimeStatus, MachineRuntimeStatus[]> = { idle: ['assigned', 'offline', 'faulted'], assigned: ['working', 'idle', 'faulted', 'offline'], working: ['completed', 'faulted', 'offline'], completed: ['idle', 'assigned', 'offline'], faulted: ['idle', 'offline'], offline: ['idle'] };
+export function canTransitionMachineStatus(from: MachineRuntimeStatus, to: MachineRuntimeStatus): boolean { return allowed[from]?.includes(to) ?? false; }
+export function transitionMachineStatus<T extends { status: MachineRuntimeStatus; updatedAt?: string }>(machine: T, to: MachineRuntimeStatus, now = new Date().toISOString()): T & { updatedAt: string } { if (!canTransitionMachineStatus(machine.status, to)) throw new Error(`invalid machine status transition ${machine.status} -> ${to}`); return { ...machine, status: to, updatedAt: now }; }

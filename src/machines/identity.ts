@@ -1,0 +1,12 @@
+export const MACHINE_ROLES = ['robot_arm', 'drone', 'sensor', 'rover', 'warehouse_bot', 'edge_node'] as const;
+export type MachineDeviceRole = typeof MACHINE_ROLES[number];
+export const MACHINE_CAPABILITIES = ['inspection', 'delivery', 'pick_place', 'mapping', 'inference', 'sensing', 'compute', 'charging', 'audit_capture'] as const;
+export type MachineCapability = typeof MACHINE_CAPABILITIES[number];
+export interface MachineIdentity { machineId: string; role: MachineDeviceRole; walletAddress: string; operatorId: string; capabilities: MachineCapability[]; label?: string | undefined; owner?: string | undefined; metadata?: Record<string, string> | undefined; }
+export interface MachineRegistryEntry extends MachineIdentity { createdAt: string; updatedAt: string; status: 'idle' | 'assigned' | 'working' | 'completed' | 'faulted' | 'offline'; sessionId?: string | undefined; }
+export function isMachineRole(value: string): value is MachineDeviceRole { return (MACHINE_ROLES as readonly string[]).includes(value); }
+export function isMachineCapability(value: string): value is MachineCapability { return (MACHINE_CAPABILITIES as readonly string[]).includes(value); }
+export function validateMachineId(machineId: string): void { if (!/^[a-z0-9][a-z0-9._:-]{2,63}$/.test(machineId)) throw new Error('invalid machine id'); }
+export function validateMachineIdentity(input: MachineIdentity): MachineIdentity { validateMachineId(input.machineId); if (!isMachineRole(input.role)) throw new Error('invalid machine role'); if (!input.capabilities.length) throw new Error('machine requires at least one capability'); for (const capability of input.capabilities) if (!isMachineCapability(capability)) throw new Error(`invalid machine capability: ${capability}`); if (!input.walletAddress) throw new Error('machine wallet required'); if (!input.operatorId) throw new Error('machine operator required'); return { ...input, capabilities: [...new Set(input.capabilities)] }; }
+export function createRegistryEntry(input: MachineIdentity, now = new Date().toISOString()): MachineRegistryEntry { const machine = validateMachineIdentity(input); return { ...machine, status: 'idle', createdAt: now, updatedAt: now }; }
+export function machineHasCapabilities(machine: Pick<MachineIdentity, 'capabilities'>, required: MachineCapability[]): boolean { return required.every((capability) => machine.capabilities.includes(capability)); }

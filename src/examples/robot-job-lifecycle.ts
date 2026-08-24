@@ -1,0 +1,17 @@
+import { registerMachine, updateMachineTelemetry, assignMachineToJob, createWorkOrder, transitionWorkOrder, normalizeTelemetrySnapshot, deriveTelemetryRef, evaluateMachineJobPolicy, buildSettlementIntent, createWorkEvidenceBundle, summarizeEvidenceBundle } from '../index.js';
+
+const MACHINE_WALLET = 'TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA';
+const RECIPIENT = 'Sysvar1111111111111111111111111111111111111';
+const SESSION_ID = 'mfi_solana_fixture_session';
+
+const machine = registerMachine({ machineId: 'robot-arm-17', role: 'robot_arm', walletAddress: MACHINE_WALLET, operatorId: 'ops-alpha', capabilities: ['pick_place', 'audit_capture'], label: 'Dock robot arm', fleetId: 'warehouse-fleet', siteId: 'dock-4' }, '2026-07-14T00:00:00.000Z');
+const workOrder = createWorkOrder({ workOrderId: 'wo-pallet-44', machineId: machine.machineId, requirement: { capabilities: ['pick_place'], telemetryRequired: true, proofRequired: true, expectedOutputs: ['pallet-position-ref'] }, settlement: { chain: 'solana', amount: '1.25', asset: 'SOL', recipient: RECIPIENT } }, '2026-07-14T00:01:00.000Z');
+const telemetry = normalizeTelemetrySnapshot({ machineId: machine.machineId, observedAt: '2026-07-14T00:02:00.000Z', batteryPct: 88, health: 'nominal', progressPct: 20, telemetryRef: 'telemetry:robot-arm-17:wo-pallet-44' });
+const telemetryEvidence = deriveTelemetryRef(telemetry, 'simulator');
+const registryEntry = assignMachineToJob(updateMachineTelemetry(machine, { telemetryRef: telemetryEvidence.refId, batteryPct: 88, health: 'nominal' }), { jobId: workOrder.workOrderId, requiredCapabilities: workOrder.requirement.capabilities });
+const decision = evaluateMachineJobPolicy(registryEntry, { jobId: workOrder.workOrderId, machineId: machine.machineId, requiredCapabilities: ['pick_place'], chain: 'solana', settlementAmount: '1.25', recipient: workOrder.settlement.recipient, status: 'created', createdAt: workOrder.createdAt, updatedAt: workOrder.updatedAt }, telemetry, { policyId: 'warehouse-standard', allowedChains: ['solana'], maxAmount: '5', minBatteryPct: 25 }, new Date('2026-07-14T00:03:00.000Z'));
+const intent = buildSettlementIntent({ chain: 'solana', source: machine.walletAddress, recipient: workOrder.settlement.recipient, amount: workOrder.settlement.amount, asset: 'SOL', machineId: machine.machineId, sessionId: SESSION_ID, policyId: decision.policyId, memo: workOrder.workOrderId });
+const proofed = transitionWorkOrder(transitionWorkOrder(transitionWorkOrder(workOrder, 'assigned', { machineId: machine.machineId }), 'preparing'), 'working');
+const submitted = transitionWorkOrder(proofed, 'proof_submitted', { telemetryRef: telemetryEvidence.refId, proofId: 'proof_warehouse_44', settlementIntentId: intent.intentId, resultRef: 'result:pallet-position:sha256-fixture' });
+const bundle = createWorkEvidenceBundle({ bundleId: 'bundle-warehouse-44', machineId: machine.machineId, workOrderId: submitted.workOrderId, sessionId: SESSION_ID, chain: 'solana', telemetryRef: telemetryEvidence.refId, settlementIntentId: intent.intentId, resultRef: submitted.resultRef, expectation: { to: workOrder.settlement.recipient, amount: workOrder.settlement.amount, machineId: machine.machineId, sessionId: SESSION_ID, memo: 'job:warehouse-route-44' } });
+console.log(JSON.stringify({ registryEntry, workOrder: submitted, telemetryEvidence, decision, intent, bundle: summarizeEvidenceBundle(bundle) }, null, 2));

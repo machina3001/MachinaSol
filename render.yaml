@@ -1,0 +1,36 @@
+services:
+  - type: web
+    name: machinasol
+    runtime: node
+    plan: free
+    region: ohio
+    branch: main
+    buildCommand: npm ci && npm run build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    autoDeployTrigger: commit
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: MACHINEFI_DATA_MODE
+        value: production
+      - key: MACHINEFI_HOST
+        value: 0.0.0.0
+      - key: MACHINEFI_ALLOW_PUBLIC_BIND
+        value: "true"
+      - key: MACHINEFI_ALLOW_LIVE
+        value: "true"
+      - key: MACHINEFI_SOLANA_CLUSTER
+        value: mainnet-beta
+      - key: MACHINEFI_PUBLIC_ORIGIN
+        value: https://machinasol.xyz
+      - key: MACHINEFI_SECURE_COOKIES
+        value: "true"
+      - key: MACHINEFI_TELEMETRY_RETENTION_DAYS
+        value: "30"
+      - key: MACHINEFI_TELEMETRY_MAX_EVENTS_PER_MACHINE
+        value: "10000"
+      - key: MACHINEFI_DATABASE_URL
+        sync: false
+      - key: MACHINEFI_SOLANA_RPC_URL
+        sync: false

@@ -1,0 +1,80 @@
+{
+  "name": "@machinefi/runtime",
+  "version": "0.9.4",
+  "description": "SDK and CLI runtime for connecting machines to wallet-linked sessions on Solana.",
+  "type": "module",
+  "license": "MIT",
+  "private": false,
+  "bin": {
+    "machinefi": "./dist/cli/index.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./solana": {
+      "types": "./dist/adapters/solana/provider.d.ts",
+      "import": "./dist/adapters/solana/provider.js"
+    }
+  },
+  "files": [
+    "dist",
+    "migrations",
+    ".env.example",
+    "README.md",
+    "docs",
+    "fixtures",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.tests.json --noEmit",
+    "dev": "tsx watch src/server/index.ts",
+    "start": "node dist/server/index.js",
+    "serve": "npm run build && node dist/server/index.js",
+    "db:migrate": "npm run build && node dist/server/production/migrate.js",
+    "test": "vitest run",
+    "test:postgres": "node -e \"if (!process.env.MACHINEFI_TEST_DATABASE_URL) throw new Error('MACHINEFI_TEST_DATABASE_URL is required')\" && vitest run tests/production-postgres.integration.test.ts",
+    "test:smoke": "npm run build && node dist/cli/index.js pair --fixture --machine-id drone-9 --wallet 11111111111111111111111111111111 --operator flight-ops && node dist/cli/index.js status --fixture && node dist/cli/index.js inspect && node dist/cli/index.js intent build --source 11111111111111111111111111111111 --recipient Sysvar1111111111111111111111111111111111111 --amount 0.5 --machine-id drone-9 --session-id mfi_solana_fixture_session --fixture && node dist/cli/index.js verify --signature 5HueCGU8rMjxEXxiPuD5BDuRaRj1hUXQG48GhYnjmQumooWcT3Yr4v7e1i4bnzK7t1Q7Fxx4E2VPu7Y9xV1r5fq --fixture --amount 0.5 --memo job:drone-inspection-9 --machine-id drone-9 --session-id mfi_solana_fixture_session",
+    "pack:preview": "npm pack --dry-run --json",
+    "prepack": "node scripts/use-npm-readme.mjs",
+    "postpack": "node scripts/restore-github-readme.mjs"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "@types/pg": "^8.23.1",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "vitest": "^4.1.11"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Machine-Fi/runtime.git"
+  },
+  "homepage": "https://github.com/Machine-Fi/runtime#readme",
+  "bugs": {
+    "url": "https://github.com/Machine-Fi/runtime/issues"
+  },
+  "keywords": [
+    "machinefi",
+    "runtime",
+    "solana",
+    "wallet",
+    "settlement",
+    "receipts",
+    "cli"
+  ],
+  "dependencies": {
+    "@solana-program/system": "^0.14.0",
+    "@solana/kit": "^8.0.0",
+    "pg": "^8.23.0"
+  }
+}

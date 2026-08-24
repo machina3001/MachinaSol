@@ -1,0 +1,10 @@
+import type { RuntimeChain } from '../adapters/shared/types.js';
+import type { MachineIdentity } from '../machines/identity.js';
+import { machineHasCapabilities } from '../machines/identity.js';
+import type { MachineTelemetrySnapshot } from '../telemetry/snapshot.js';
+import { telemetryIsUsable } from '../telemetry/snapshot.js';
+import type { MachineJob } from './lifecycle.js';
+import { amountExceedsLimit } from '../settlement/policy-limits.js';
+export interface MachineJobPolicy { policyId: string; allowedChains: RuntimeChain[]; maxAmount: string; minBatteryPct?: number | undefined; allowedCapabilities?: string[] | undefined; }
+export interface MachinePolicyDecision { accepted: boolean; policyId: string; reasons: string[]; machineId: string; jobId: string; }
+export function evaluateMachineJobPolicy(machine: MachineIdentity, job: MachineJob, telemetry: MachineTelemetrySnapshot, policy: MachineJobPolicy, now = new Date()): MachinePolicyDecision { const reasons: string[] = []; if (machine.machineId !== job.machineId) reasons.push('job machine mismatch'); if (telemetry.machineId !== machine.machineId || telemetry.machineId !== job.machineId) reasons.push('telemetry machine mismatch'); if (!machineHasCapabilities(machine, job.requiredCapabilities)) reasons.push('machine missing required capability'); if (policy.allowedCapabilities && job.requiredCapabilities.some((capability) => !policy.allowedCapabilities!.includes(capability))) reasons.push('capability not allowed by policy'); if (!policy.allowedChains.includes(job.chain)) reasons.push('settlement rail not allowed by policy'); if (amountExceedsLimit(job.settlementAmount, policy.maxAmount, job.chain, job.settlementAsset)) reasons.push('settlement amount exceeds policy limit'); if (policy.minBatteryPct !== undefined && (telemetry.batteryPct ?? -1) < policy.minBatteryPct) reasons.push('battery below policy threshold'); if (!telemetryIsUsable(telemetry, now)) reasons.push('telemetry is stale or unhealthy'); return { accepted: reasons.length === 0, reasons, policyId: policy.policyId, machineId: machine.machineId, jobId: job.jobId }; }

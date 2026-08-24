@@ -1,0 +1,23 @@
+{
+  "receipts": [
+    {
+      "id": "5HueCGU8rMjxEXxiPuD5BDuRaRj1hUXQG48GhYnjmQumooWcT3Yr4v7e1i4bnzK7t1Q7Fxx4E2VPu7Y9xV1r5fq",
+      "status": "success",
+      "slot": 288123456,
+      "confirmationStatus": "finalized",
+      "confirmations": 32,
+      "transaction": {
+        "message": {
+          "accountKeys": [
+            "11111111111111111111111111111111",
+            "Sysvar1111111111111111111111111111111111111"
+          ]
+        }
+      },
+      "memo": "job:drone-inspection-9",
+      "amount": "0.5",
+      "machineId": "drone-9",
+      "sessionId": "mfi_solana_fixture_session"
+    }
+  ]
+}

@@ -1,0 +1,2 @@
+import { buildSettlementIntent } from '../settlement/intents.js';
+console.log(JSON.stringify(buildSettlementIntent({ chain: 'solana', source: '11111111111111111111111111111111', recipient: 'Sysvar1111111111111111111111111111111111111', amount: '0.5', asset: 'SOL', machineId: 'drone-9', sessionId: 'mfi_solana_fixture_session', policyId: 'standard-machine-policy', memo: 'inspection route payout', reference: 'job:drone-inspection-9', nonce: 'example' }), null, 2));

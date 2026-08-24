@@ -1,0 +1,24 @@
+-- Phase-2 production hardening for installations upgraded through migration
+-- 001. The earlier NOT VALID clauses kept upgrades online while immediately
+-- protecting new writes. This migration proves that legacy rows also satisfy
+-- every ownership, relationship, vocabulary, price, and settlement linkage
+-- constraint.
+
+ALTER TABLE mc_auth_sessions VALIDATE CONSTRAINT mc_auth_sessions_verified_wallet_fk;
+ALTER TABLE mc_machines VALIDATE CONSTRAINT mc_machines_role_check;
+ALTER TABLE mc_machines VALIDATE CONSTRAINT mc_machines_verified_wallet_fk;
+ALTER TABLE mc_provider_capabilities VALIDATE CONSTRAINT mc_provider_capabilities_machine_owner_fk;
+ALTER TABLE mc_provider_capabilities VALIDATE CONSTRAINT mc_provider_capabilities_resource_type_check;
+ALTER TABLE mc_provider_capabilities VALIDATE CONSTRAINT mc_provider_capabilities_price_check;
+ALTER TABLE mc_resource_requests VALIDATE CONSTRAINT mc_resource_requests_machine_owner_fk;
+ALTER TABLE mc_resource_requests VALIDATE CONSTRAINT mc_resource_requests_capability_provider_fk;
+ALTER TABLE mc_resource_requests VALIDATE CONSTRAINT mc_resource_requests_resource_type_check;
+ALTER TABLE mc_resource_requests VALIDATE CONSTRAINT mc_resource_requests_quote_check;
+ALTER TABLE mc_resource_requests VALIDATE CONSTRAINT mc_resource_requests_selected_state_check;
+ALTER TABLE mc_resource_quotes VALIDATE CONSTRAINT mc_resource_quotes_asset_check;
+ALTER TABLE mc_settlements VALIDATE CONSTRAINT mc_settlements_request_fk;
+ALTER TABLE mc_settlements VALIDATE CONSTRAINT mc_settlements_quote_request_fk;
+ALTER TABLE mc_settlements VALIDATE CONSTRAINT mc_settlements_request_required;
+ALTER TABLE mc_settlements VALIDATE CONSTRAINT mc_settlements_verified_wallet_fk;
+ALTER TABLE mc_settlements VALIDATE CONSTRAINT mc_settlements_machine_owner_fk;
+ALTER TABLE mc_resource_receipts VALIDATE CONSTRAINT mc_resource_receipts_settlement_request_fk;

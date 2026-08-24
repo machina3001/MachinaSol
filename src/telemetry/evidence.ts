@@ -1,0 +1,4 @@
+import { createHash } from 'node:crypto';
+import type { MachineTelemetrySnapshot } from './snapshot.js';
+export interface TelemetryEvidenceRef { refId: string; machineId: string; observedAt: string; source: 'snapshot' | 'simulator' | 'operator_event' | 'provider_bridge'; fields: string[]; }
+export function deriveTelemetryRef(snapshot: MachineTelemetrySnapshot, source: TelemetryEvidenceRef['source'] = 'snapshot'): TelemetryEvidenceRef { const fields = Object.entries(snapshot).filter(([, value]) => value !== undefined).map(([key]) => key).sort(); const seed = JSON.stringify({ machineId: snapshot.machineId, observedAt: snapshot.observedAt, source, fields, telemetryRef: snapshot.telemetryRef }); const refId = `telemetry_${createHash('sha256').update(seed).digest('hex').slice(0, 20)}`; return { refId, machineId: snapshot.machineId, observedAt: snapshot.observedAt, source, fields }; }
