@@ -387,7 +387,7 @@ export function renderPublicSiteHtml(nonce: string, options: PublicSiteOptions):
     <section class="section" id="developers">
       <span class="section-index">08 / DEVELOPERS</span>
       <div class="container developer-box">
-        <div class="developer-copy"><p class="eyebrow">Developer runtime</p><h2>Inspect the primitives. Build the application.</h2><p>The public TypeScript package exposes runtime interfaces for wallet-linked machine sessions, work lifecycle, telemetry normalization, unsigned intents, and receipt verification.</p><div class="developer-actions"><a class="button primary" href="${GITHUB_URL}" target="_blank" rel="noreferrer">View GitHub ↗</a><a class="button" href="${NPM_URL}" target="_blank" rel="noreferrer">npm package ↗</a></div></div>
+        <div class="developer-copy"><p class="eyebrow">Developer runtime</p><h2>Inspect the primitives. Build the application.</h2><p>The public TypeScript package exposes runtime interfaces for wallet-linked machine sessions, work lifecycle, telemetry normalization, unsigned intents, and receipt verification.</p><div class="developer-actions"><a class="button primary" href="${GITHUB_URL}" target="_blank" rel="noreferrer">View GitHub ↗</a></div></div>
         <div class="terminal"><div class="terminal-top"><span>Quick start</span><span>@machinefi/runtime · v${version}</span></div><pre><span class="comment"># Install the runtime SDK</span>
 <span class="prompt">$</span> npm install @machinefi/runtime
 
