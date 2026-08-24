@@ -1,6 +1,6 @@
 # Machina
 
-[![CI](https://github.com/Machine-Fi/runtime/actions/workflows/ci.yml/badge.svg)](https://github.com/Machine-Fi/runtime/actions/workflows/ci.yml)
+[![CI](https://github.com/machina3001/MachinaSol/actions/workflows/ci.yml/badge.svg)](https://github.com/machina3001/MachinaSol/actions/workflows/ci.yml)
 [![npm](https://img.shields.io/npm/v/@machinefi/runtime.svg)](https://www.npmjs.com/package/@machinefi/runtime)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 ![TypeScript SDK + CLI](https://img.shields.io/badge/TypeScript-SDK%20%2B%20CLI-blue.svg)

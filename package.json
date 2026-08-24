@@ -57,11 +57,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Machine-Fi/runtime.git"
+    "url": "git+https://github.com/machina3001/MachinaSol.git"
   },
-  "homepage": "https://github.com/Machine-Fi/runtime#readme",
+  "homepage": "https://github.com/machina3001/MachinaSol#readme",
   "bugs": {
-    "url": "https://github.com/Machine-Fi/runtime/issues"
+    "url": "https://github.com/machina3001/MachinaSol/issues"
   },
   "keywords": [
     "machinefi",
