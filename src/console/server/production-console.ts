@@ -806,6 +806,10 @@ const compactWallet = (wallet: string): string => wallet.length > 13
   ? `${wallet.slice(0, 5)}…${wallet.slice(-5)}`
   : wallet;
 
+/** Keeps Solana's canonical config identifier out of operator-facing labels. */
+export const solanaClusterDisplayLabel = (cluster: ServerConfig['solanaCluster'] | string | undefined): string =>
+  cluster === 'mainnet-beta' ? 'mainnet' : cluster ?? 'custom';
+
 const layout = (active: string, wallet: string, cluster: string, body: string): string => `
 <div class="mc-shell mc-shell--production">
   <div class="mc-shell__brand">
@@ -816,7 +820,7 @@ const layout = (active: string, wallet: string, cluster: string, body: string): 
   </div>
   <div class="mc-shell__topbar">
     <header class="mc-topbar">
-      <div class="mc-topbar__slot"><span class="mc-environment"><span class="mc-dot mc-dot--pulse"></span>${esc(cluster)}</span><span class="mc-topbar__context">Production workspace</span></div>
+      <div class="mc-topbar__slot"><span class="mc-environment"><span class="mc-dot mc-dot--pulse"></span>${esc(solanaClusterDisplayLabel(cluster))}</span><span class="mc-topbar__context">Production workspace</span></div>
       <div class="mc-topbar__slot mc-topbar__slot--end">
         <span class="mc-wallet-chip" title="${esc(wallet)}"><span class="mc-wallet-chip__avatar" aria-hidden="true"></span><span class="mc-mono">${esc(compactWallet(wallet))}</span></span>
         <button id="mc-production-logout" class="mc-btn mc-btn--quiet" type="button">Log out</button>
@@ -1053,10 +1057,10 @@ export async function renderProductionConsoleDocument(input: {
       <section class="mc-auth-showcase" aria-label="Machine Console introduction">
         <a class="mc-brand mc-auth-brand" href="/console/overview"><span class="mc-brand__mark" aria-hidden="true"><span>M</span></span><span class="mc-brand__meta"><span class="mc-brand__name">Machine Console</span><span class="mc-brand__sub">Production control plane</span></span></a>
         <div class="mc-auth-showcase__copy"><p class="mc-kicker">Secure machine infrastructure</p><h1>Operate physical networks with verifiable ownership.</h1><p>Monitor machines, coordinate resources, and settle work through one ownership-scoped control plane.</p></div>
-        <div class="mc-auth-proof-grid"><div><span class="mc-auth-proof__icon">01</span><strong>Wallet-owned</strong><small>Every operation is authorized server-side.</small></div><div><span class="mc-auth-proof__icon">02</span><strong>${esc(input.config.solanaCluster ?? 'Custom network')} verified</strong><small>RPC identity is checked before startup.</small></div><div><span class="mc-auth-proof__icon">03</span><strong>Non-custodial</strong><small>Your private keys never leave your wallet.</small></div></div>
+        <div class="mc-auth-proof-grid"><div><span class="mc-auth-proof__icon">01</span><strong>Wallet-owned</strong><small>Every operation is authorized server-side.</small></div><div><span class="mc-auth-proof__icon">02</span><strong>${esc(solanaClusterDisplayLabel(input.config.solanaCluster))} verified</strong><small>RPC identity is checked before startup.</small></div><div><span class="mc-auth-proof__icon">03</span><strong>Non-custodial</strong><small>Your private keys never leave your wallet.</small></div></div>
       </section>
       <section class="mc-card mc-auth-card">
-        <span class="mc-environment"><span class="mc-dot mc-dot--pulse"></span>${esc(input.config.solanaCluster ?? 'custom')}</span>
+        <span class="mc-environment"><span class="mc-dot mc-dot--pulse"></span>${esc(solanaClusterDisplayLabel(input.config.solanaCluster))}</span>
         <div class="mc-auth-card__copy"><p class="mc-kicker">Welcome back</p><h2>Authenticate with your wallet</h2><p>Sign a short-lived authentication message to enter your production workspace.</p></div>
         <button id="mc-production-connect" class="mc-btn mc-btn--primary mc-btn--auth" type="button"><span aria-hidden="true">↗</span> Connect Solana wallet</button>
         <p id="mc-production-status" role="status" aria-live="polite" class="mc-auth-status">No wallet is connected.</p>
@@ -1187,7 +1191,7 @@ export async function renderProductionConsoleDocument(input: {
     const liveMachines = latestTelemetryByMachine(telemetry).size;
     body = `<section class="mc-overview-hero">
       <div><p class="mc-kicker">Authenticated production data</p><h1>Command center</h1><p>Ownership-scoped activity across your machine network.</p></div>
-      <div class="mc-overview-hero__meta"><span class="mc-environment"><span class="mc-dot mc-dot--pulse"></span>${esc(input.config.solanaCluster ?? 'custom')}</span><span class="mc-verified-label">Genesis verified</span></div>
+      <div class="mc-overview-hero__meta"><span class="mc-environment"><span class="mc-dot mc-dot--pulse"></span>${esc(solanaClusterDisplayLabel(input.config.solanaCluster))}</span><span class="mc-verified-label">Genesis verified</span></div>
     </section>
     <div class="mc-stat-grid mc-overview-stats">
       <section class="mc-card mc-stat"><div class="mc-stat__head"><span class="mc-stat__eyebrow">Owned machines</span><span class="mc-stat__glyph" aria-hidden="true">M</span></div><strong class="mc-stat__value">${machines.length}</strong><p class="mc-stat__hint">Authorized for this wallet</p></section>
@@ -1200,7 +1204,7 @@ export async function renderProductionConsoleDocument(input: {
       <div class="mc-onboarding__steps"><div><span>1</span><strong>Register</strong><small>Create a machine owned by this wallet.</small></div><div><span>2</span><strong>Connect</strong><small>Issue a scoped ingestion credential.</small></div><div><span>3</span><strong>Operate</strong><small>Stream telemetry and assign work.</small></div></div>
       <div class="mc-onboarding__actions"><button class="mc-btn mc-btn--primary" type="button" data-machine-open>Register first machine</button><a class="mc-btn mc-btn--secondary" href="/api">View API routes</a></div>
     </section>` : `<section class="mc-card mc-overview-panel"><div><p class="mc-kicker">Fleet status</p><h2>Machine network</h2><p>${machines.length} machine${machines.length === 1 ? '' : 's'} registered, ${liveMachines} currently reporting telemetry.</p></div><a class="mc-btn mc-btn--secondary" href="/console/machines">Open registry</a></section>`}
-    <section class="mc-card mc-network-proof"><div class="mc-network-proof__mark" aria-hidden="true">✓</div><div><p class="mc-kicker">Verified network boundary</p><h2>Solana ${esc(input.config.solanaCluster ?? 'custom')}</h2><p>RPC genesis identity was cryptographically checked at startup—an environment label alone was not trusted.</p></div><div class="mc-network-proof__hash"><span>Genesis hash</span><code>${esc(input.runtime.network.actualGenesisHash)}</code><small>Verified ${esc(input.runtime.network.verifiedAt)}</small></div></section>${machineRegistrationDialog()}`;
+    <section class="mc-card mc-network-proof"><div class="mc-network-proof__mark" aria-hidden="true">✓</div><div><p class="mc-kicker">Verified network boundary</p><h2>Solana ${esc(solanaClusterDisplayLabel(input.config.solanaCluster))}</h2><p>RPC genesis identity was cryptographically checked at startup—an environment label alone was not trusted.</p></div><div class="mc-network-proof__hash"><span>Genesis hash</span><code>${esc(input.runtime.network.actualGenesisHash)}</code><small>Verified ${esc(input.runtime.network.verifiedAt)}</small></div></section>${machineRegistrationDialog()}`;
   } else if (route.section === 'machines') {
     if (machineById) {
       const events = telemetry.filter((event) => event.machineId === machineById.machineId);
@@ -1220,7 +1224,7 @@ export async function renderProductionConsoleDocument(input: {
       const machineRequestViews = lifecycleViews.filter((view) => view.request.requesterMachineId === machineById.machineId || view.request.providerMachineId === machineById.machineId);
       const detailTabs = ['overview', 'runtime', 'jobs', 'resources', 'telemetry', 'settlements', 'receipts'] as const;
       const tabs = `<nav class="mc-detail-tabs" aria-label="Machine detail">${detailTabs.map((tabName) => `<a href="/console/machines/${encodeURIComponent(machineById.machineId)}/${tabName}"${activeTab === tabName ? ' aria-current="page"' : ''}>${esc(tabName)}</a>`).join('')}</nav>`;
-      const header = `<p class="mc-kicker">Owned machine</p><h1>${esc(machineById.label)}</h1><p class="mc-mono">${esc(machineById.machineId)}</p><p class="mc-dim">Verified Solana network: ${esc(input.config.solanaCluster ?? 'custom')} · genesis <span class="mc-mono">${esc(input.runtime.network.actualGenesisHash)}</span></p>${tabs}`;
+      const header = `<p class="mc-kicker">Owned machine</p><h1>${esc(machineById.label)}</h1><p class="mc-mono">${esc(machineById.machineId)}</p><p class="mc-dim">Verified Solana network: ${esc(solanaClusterDisplayLabel(input.config.solanaCluster))} · genesis <span class="mc-mono">${esc(input.runtime.network.actualGenesisHash)}</span></p>${tabs}`;
       if (activeTab === 'runtime') {
         const latestSession = [...sessions].sort((left, right) => right.updatedAt.localeCompare(left.updatedAt))[0];
         const activeSession = sessions.find((session) => session.endedAt === null);
@@ -1412,7 +1416,7 @@ export async function renderProductionConsoleDocument(input: {
     });
     body = `<p class="mc-kicker">Persistent marketplace evidence</p><h1>Receipts</h1><p>Access grants and resource receipts are application-level durable records. A recorded receipt is not verified until the authenticated requester accepts it.</p>${table(['Receipt ID', 'Request', 'Role', 'Requester machine', 'Provider machine', 'Resource', 'Request state', 'Grant', 'Receipt state', 'Settlement', 'Transaction', 'Evidence', 'Updated'], receiptRows, 'Persisted access and receipt records')}`;
   } else if (route.section === 'settings') {
-    body = `<p class="mc-kicker">Production configuration</p><h1>Settings</h1><dl class="mc-kv"><div><dt>Data mode</dt><dd>production · PostgreSQL</dd></div><div><dt>Wallet session</dt><dd>verified · HttpOnly · SameSite=Strict</dd></div><div><dt>Solana cluster</dt><dd>${esc(input.config.solanaCluster ?? 'custom')} · genesis verified</dd></div><div><dt>RPC destination</dt><dd>operator configured · not exposed</dd></div><div><dt>Telemetry retention</dt><dd>${esc(input.config.telemetryRetentionDays ?? 30)} days</dd></div><div><dt>Telemetry row cap</dt><dd>${esc(input.config.telemetryMaxEventsPerMachine ?? 10_000)} events per machine</dd></div><div><dt>Fixture fallback</dt><dd>disabled</dd></div></dl>`;
+    body = `<p class="mc-kicker">Production configuration</p><h1>Settings</h1><dl class="mc-kv"><div><dt>Data mode</dt><dd>production · PostgreSQL</dd></div><div><dt>Wallet session</dt><dd>verified · HttpOnly · SameSite=Strict</dd></div><div><dt>Solana cluster</dt><dd>${esc(solanaClusterDisplayLabel(input.config.solanaCluster))} · genesis verified</dd></div><div><dt>RPC destination</dt><dd>operator configured · not exposed</dd></div><div><dt>Telemetry retention</dt><dd>${esc(input.config.telemetryRetentionDays ?? 30)} days</dd></div><div><dt>Telemetry row cap</dt><dd>${esc(input.config.telemetryMaxEventsPerMachine ?? 10_000)} events per machine</dd></div><div><dt>Fixture fallback</dt><dd>disabled</dd></div></dl>`;
   } else {
     body = `<p class="mc-kicker">Production boundary</p><h1>${esc(navItems.find(([id]) => id === route.section)?.[1] ?? route.section)}</h1><section class="mc-card"><h2>No persisted records for this view</h2><p>This route is preserved, but no fixture or inferred record is substituted in production mode. Use the authenticated API to create the underlying records.</p></section>`;
   }

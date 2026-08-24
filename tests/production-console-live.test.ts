@@ -9,6 +9,7 @@ import {
   isSettlementEligibleRequest,
   productionClientScript,
   renderTelemetryTable,
+  solanaClusterDisplayLabel,
   solanaExplorerTransactionUrl,
 } from '../src/console/server/production-console.js';
 import {
@@ -292,6 +293,8 @@ describe('production Console client hooks', () => {
   });
 
   it('links signatures only to the verified public cluster explorer', () => {
+    expect(solanaClusterDisplayLabel('mainnet-beta')).toBe('mainnet');
+    expect(solanaClusterDisplayLabel('devnet')).toBe('devnet');
     expect(solanaExplorerTransactionUrl('signature', 'mainnet-beta')).toBe(
       'https://explorer.solana.com/tx/signature'
     );
